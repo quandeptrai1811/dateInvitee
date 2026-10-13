@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>A Special Date for You • 20/10</title>
+  
+  <!-- Meta tags for social preview & SEO -->
+  <meta name="description" content="Lời mời hẹn hò đặc biệt dành riêng cho em nhân ngày 20/10.">
+  <meta property="og:title" content="A Special Date for You • 20/10">
+  <meta property="og:description" content="Một ngày dành riêng cho nụ cười của em. Bấm để mở thư...">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#fcf8f7">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+
+  <!-- Google Fonts: Elegant Romance & Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <!-- Canvas for romantic floating petals & ambient sparkles -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Real Background Audio Player -->
+  <audio id="bg-audio" preload="auto" loop>
+    <source id="audio-src-local" src="./music.mp3" type="audio/mpeg">
+    <source id="audio-src-cdn" src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Gymnopedie_No_1.ogg" type="audio/ogg">
+    <source src="https://archive.org/download/GymnopedieNo1/GymnopedieNo1.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Input ẩn để người dùng tự chọn file MP3 từ máy tính/điện thoại -->
+  <input type="file" id="custom-audio-input" accept="audio/*" class="hidden">
+
+  <!-- Top Floating Control Bar (Language, Theme, Music & Playlist) -->
+  <header class="top-control-bar">
+    <div class="control-group">
+      <!-- Language Switcher (VI / EN) -->
+      <button id="lang-toggle" class="control-btn lang-btn" aria-label="Đổi ngôn ngữ / Switch language" title="Switch Language (VI / EN)">
+        <span class="control-icon">🌐</span>
+        <span class="lang-text" id="lang-indicator">VI</span>
+      </button>
+
+      <!-- Theme Switcher (Light / Dark) -->
+      <button id="theme-toggle" class="control-btn theme-btn" aria-label="Đổi chế độ sáng/tối" title="Chuyển chế độ Sáng / Tối">
+        <span class="theme-icon" id="theme-icon">🌙</span>
+      </button>
+
+      <!-- Music Player Controls -->
+      <div class="music-control-wrapper">
+        <button id="sound-toggle" class="control-btn sound-btn" aria-label="Bật/Tắt âm thanh" title="Bật/Tắt nhạc nền">
+          <span class="sound-icon">♫</span>
+          <span class="sound-text" id="sound-label">Nhạc nền</span>
+        </button>
+
+        <select id="melody-select" class="melody-select" aria-label="Chọn bài hát" title="Chọn bài hát lãng mạn">
+          <option value="gymnopedie">🎹 Satie: Gymnopédie No. 1 (Dịu êm)</option>
+          <option value="clair">🌙 Debussy: Clair de Lune (Ánh trăng)</option>
+          <option value="canon">🎻 Pachelbel: Canon in D (Bất hủ)</option>
+          <option value="chimes">🎐 Chuông gió thư giãn (Ambient Chimes)</option>
+          <option value="custom">📁 Chọn file nhạc từ máy (.mp3)...</option>
+        </select>
+
+        <div class="volume-box" title="Âm lượng nhạc">
+          <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.35" aria-label="Âm lượng">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== ENVELOPE / INVITATION SEAL SCREEN ==================== -->
+  <section id="envelope-stage" class="envelope-stage">
+    <div class="envelope-wrapper">
+      <div class="envelope-hint" data-i18n="envelopeHint">Chạm vào con dấu sáp để mở thư gửi em</div>
+      
+      <div class="envelope" id="envelope-card">
+        <div class="envelope-flap" id="envelope-flap"></div>
+        <div class="envelope-pocket"></div>
+        <div class="envelope-letter-preview">
+          <p class="preview-cursive">Special for You</p>
+          <p class="preview-date">20 • 10</p>
+        </div>
+        
+        <!-- Wax Seal Button -->
+        <button id="wax-seal" class="wax-seal" aria-label="Mở phong bì">
+          <div class="seal-inner">
+            <span class="seal-monogram">20/10</span>
+            <span class="seal-heart">♥</span>
+          </div>
+          <div class="seal-glow"></div>
+        </button>
+      </div>
+
+      <div class="invitation-intro">
+        <p class="tagline" data-i18n="tagline">An Exclusive Invitation</p>
+        <h1 class="main-title" data-i18n="mainTitle">Dành Riêng Cho Em</h1>
+        <p class="sub-date" data-i18n="subDate">Chủ Nhật • 20 Tháng 10</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MAIN INVITATION CONTENT ==================== -->
+  <main id="main-content" class="main-content hidden">
+    
+    <!-- Hero / Header Section -->
+    <header class="hero-section">
+      <div class="container hero-container">
+        <div class="badge-pill">
+          <span class="sparkle">✧</span> <span data-i18n="badgePill">20 • 10 • Vietnamese Women's Day</span> <span class="sparkle">✧</span>
+        </div>
+        <h1 class="hero-headline" data-i18n="heroHeadline">Hẹn Hò Cùng Anh</h1>
+        <p class="hero-subline" data-i18n="heroSubline">"Mỗi khoảnh khắc đẹp đẽ nhất hôm nay, anh đều muốn dành tặng riêng em."</p>
+        
+        <!-- Countdown Widget -->
+        <div class="countdown-card" id="countdown-card">
+          <div class="countdown-title" data-i18n="countdownTitle">Đếm ngược đến giờ hẹn</div>
+          <div class="countdown-timer">
+            <div class="time-block">
+              <span class="time-number" id="days">00</span>
+              <span class="time-label" data-i18n="daysLabel">Ngày</span>
+            </div>
+            <span class="time-divider">:</span>
+            <div class="time-block">
+              <span class="time-number" id="hours">00</span>
+              <span class="time-label" data-i18n="hoursLabel">Giờ</span>
+            </div>
+            <span class="time-divider">:</span>
+            <div class="time-block">
+              <span class="time-number" id="minutes">00</span>
+              <span class="time-label" data-i18n="minutesLabel">Phút</span>
+            </div>
+            <span class="time-divider">:</span>
+            <div class="time-block">
+              <span class="time-number" id="seconds">00</span>
+              <span class="time-label" data-i18n="secondsLabel">Giây</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-cue">
+          <span data-i18n="scrollCue">Khám phá lịch trình</span>
+          <div class="cue-arrow">↓</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Itinerary Timeline Section -->
+    <section class="itinerary-section" id="itinerary">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow" data-i18n="itineraryEyebrow">The Itinerary</span>
+          <h2 class="section-title" data-i18n="itineraryTitle">Hành Trình Ngày 20/10</h2>
+          <div class="ornament-line"></div>
+          <p class="section-desc" data-i18n="itineraryDesc">Anh đã chuẩn bị sẵn mọi điều, em chỉ cần mang theo một nụ cười thật tươi.</p>
+        </div>
+
+        <div class="timeline">
+          
+          <!-- STAGE 1: AFTERNOON SURPRISE (12:00 - 16:00 - MÓN QUÀ GIAO TỚI) -->
+          <article class="timeline-item timeline-afternoon" data-reveal>
+            <div class="timeline-marker">
+              <div class="marker-dot">
+                <span>12:00</span>
+              </div>
+            </div>
+
+            <div class="timeline-card surprise-card">
+              <div class="card-tag tag-afternoon">
+                <span class="tag-icon">🎁</span> <span data-i18n="afternoonTag">Stage 1 • Một Tí Bất Ngờ Nhỏ</span>
+              </div>
+
+              <div class="card-time">12:00 - 16:00</div>
+              <h3 class="card-title" data-i18n="afternoonTitle">Món Quà Bí Mật Đang Trên Đường Đến</h3>
+              <p class="card-summary" data-i18n="afternoonSummary">
+                Một chút bất ngờ nhỏ đầu ngày: Trong khoảng thời gian từ 12:00 đến 16:00, một món quà bí mật được chuẩn bị riêng sẽ được giao đến tận tay em. Em chỉ cần giữ điện thoại để nhận quà bất ngờ nhé!
+              </p>
+
+              <!-- Interactive Clue / Scratch to reveal -->
+              <div class="mystery-box" id="mystery-box">
+                <div class="mystery-teaser">
+                  <div class="teaser-icon">🎀</div>
+                  <div class="teaser-text">
+                    <strong data-i18n="mysteryTeaserTitle">Gợi ý món quà giao đến</strong>
+                    <span data-i18n="mysteryTeaserSub">Chạm để hé lộ điều bất ngờ...</span>
+                  </div>
+                  <button class="reveal-btn" id="reveal-surprise-btn" aria-label="Mở quà bí mật" data-i18n="revealBtn">
+                    Hé lộ
+                  </button>
+                </div>
+
+                <div class="mystery-secret hidden" id="mystery-secret">
+                  <div class="secret-content">
+                    <div class="secret-stars">✨ ✦ ✨</div>
+                    <h4 data-i18n="secretHeading">Bất Ngờ Giao Tận Tay Em:</h4>
+                    <ul>
+                      <li data-i18n="secretItem1">💐 <strong>Món quà ngọt ngào:</strong> Bó hoa tone màu em yêu thích cùng chiếc thiệp viết tay chân thành.</li>
+                      <li data-i18n="secretItem2">📦 <strong>Thời gian giao:</strong> Shipper sẽ liên hệ trong khung giờ 12:00 - 16:00 này.</li>
+                      <li data-i18n="secretItem3">💌 <strong>Nhiệm vụ của nàng:</strong> Nhận quà, mỉm cười thật tươi và mở chiếc thiệp bí mật ra xem nhé!</li>
+                    </ul>
+                    <p class="secret-note"><em data-i18n="secretNote">"Mở đầu cho một ngày 20/10 thật nhiều niềm vui của em!"</em></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-meta">
+                <span class="meta-item" data-i18n="afternoonMetaPickup">📍 Địa điểm: Giao đến tận nơi của nàng</span>
+                <span class="meta-item" data-i18n="afternoonMetaDress">📱 Lưu ý: Giữ chuông điện thoại trong khoảng 12:00 - 16:00</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STAGE 2: HEADING HOME AT 17:00 (17:00 - 18:30) -->
+          <article class="timeline-item timeline-traffic" data-reveal>
+            <div class="timeline-marker">
+              <div class="marker-dot marker-traffic">
+                <span>17:00</span>
+              </div>
+            </div>
+
+            <div class="timeline-card traffic-card">
+              <div class="card-tag tag-traffic">
+                <span class="tag-icon">🛵</span> <span data-i18n="trafficTag">Stage 2 • Bắt Đầu Về Lúc 17h</span>
+              </div>
+              <div class="card-time">17:00 - 18:30</div>
+              <h3 class="card-title" data-i18n="trafficTitle">Bắt Đầu Về & Ác Mộng Kẹt Xe Tan Tầm 🚗💨</h3>
+              <p class="card-summary" data-i18n="trafficSummary">
+                Bắt đầu xuất phát về lúc 17h! Đây là "thử thách lớn nhất ngày 20/10": Vượt qua biển người xe cộ kẹt cứng giờ tan tầm để về nhà nghỉ ngơi, tắm rửa thơm tho và khoác lên chiếc váy xinh đẹp nhất trước giờ hẹn tối!
+              </p>
+              <div class="traffic-fun-box">
+                <div class="fun-icon">🚥</div>
+                <div class="fun-content">
+                  <strong data-i18n="trafficFunTitle">Chiến Thuật Vượt Ùn Tắc:</strong>
+                  <p data-i18n="trafficFunDesc">Bật playlist nhạc yêu thích, kiên nhẫn từng mét đường. Về đến nhà là được thư thả chuẩn bị, không vội vàng!</p>
+                </div>
+              </div>
+              <div class="card-meta">
+                <span class="meta-item" data-i18n="trafficMetaTip">💡 Tips: Nghỉ ngơi dưỡng sức, sạc đầy pin điện thoại sẵn sàng cho buổi tối</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- STAGE 3: NIGHT DINNER AT PIZZA 4P'S WITH SUGGESTED MENU (19:30) -->
+          <article class="timeline-item timeline-night" data-reveal>
+            <div class="timeline-marker">
+              <div class="marker-dot">
+                <span>19:30</span>
+              </div>
+            </div>
+
+            <div class="timeline-card night-card">
+              <div class="card-tag tag-night">
+                <span class="tag-icon">🌙</span> <span data-i18n="nightTag">Stage 3 • Bữa Tối Lãng Mạn (19:30)</span>
+              </div>
+
+              <div class="card-time">19:30 - 21:30</div>
+              <h3 class="card-title" data-i18n="nightTitle">Dạ Tiệc Pizza 4P's Trần Ngọc Diện</h3>
+              <p class="card-summary" data-i18n="nightSummary">
+                Một bàn tiệc ấm cúng giữa không gian sân vườn rợp bóng cây xanh mát và ánh đèn dịu ngọt tại Pizza 4P's Thảo Điền. Nơi có phô mai Burrata tươi béo ngậy, pizza nướng củi thơm lừng và những câu chuyện chỉ của hai chúng ta.
+              </p>
+
+              <!-- Restaurant Highlight Badge & Map Link -->
+              <div class="restaurant-badge">
+                <div class="res-info">
+                  <div class="res-name">🍕 Pizza 4P's Tran Ngoc Dien</div>
+                  <div class="res-address">📍 Thảo Điền, TP. Thủ Đức, TP. Hồ Chí Minh</div>
+                </div>
+                <a href="https://www.google.com/maps/place/Pizza+4P's+Tran+Ngoc+Dien/@10.8063087,106.741081,17z/data=!3m1!4b1!4m6!3m5!1s0x317527003ccc9943:0x81a908b7a352d9fe!8m2!3d10.8063087!4d106.741081!16s%2Fg%2F11yrbyddxk?entry=ttu&g_ep=EgoyMDI2MTAwNy4wIKXMDSoASAFQAw%3D%3D" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="res-map-btn" 
+                   data-i18n="mapBtn">
+                  Mở Google Maps ↗
+                </a>
+              </div>
+
+              <!-- Suggested Menu Section -->
+              <div class="menu-suggestion-box">
+                <div class="menu-box-header">
+                  <span class="menu-icon">🍽️</span>
+                  <h4 data-i18n="menuHeading">Menu Gợi Ý Cho Bữa Tối</h4>
+                </div>
+                <div class="menu-items-grid">
+                  <div class="menu-dish">
+                    <span class="dish-bullet">🥗</span>
+                    <div class="dish-info">
+                      <strong data-i18n="dish1Title">1 Phần Salad Trái Cây với Burrata</strong>
+                      <span data-i18n="dish1Desc">Phô mai Burrata tươi béo ngậy kết hợp trái cây theo mùa thanh mát</span>
+                    </div>
+                  </div>
+                  <div class="menu-dish">
+                    <span class="dish-bullet">🍕</span>
+                    <div class="dish-info">
+                      <strong data-i18n="dish2Title">1 Pizza Half-Half Nướng Củi</strong>
+                      <span data-i18n="dish2Desc">2 nửa hương vị đặc trưng nóng hổi kết hợp theo sở thích</span>
+                    </div>
+                  </div>
+                  <div class="menu-dish">
+                    <span class="dish-bullet">🍝</span>
+                    <div class="dish-info">
+                      <strong data-i18n="dish3Title">1 Đĩa Mì Ý Thơm Lừng</strong>
+                      <span data-i18n="dish3Desc">Sợi pasta tươi dai mềm hòa quyện nước sốt đậm đà</span>
+                    </div>
+                  </div>
+                  <div class="menu-dish">
+                    <span class="dish-bullet">🍰</span>
+                    <div class="dish-info">
+                      <strong data-i18n="dish4Title">1 Tí Tráng Miệng Ngọt Ngào</strong>
+                      <span data-i18n="dish4Desc">Món bánh tráng miệng dịu êm khép lại một ngày trọn vẹn</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="night-highlights">
+                <div class="highlight-item">
+                  <div class="hl-icon">🧀</div>
+                  <div class="hl-info">
+                    <strong data-i18n="hlBurrataTitle">Burrata trứ danh & Pizza nướng củi</strong>
+                    <span data-i18n="hlBurrataSub">Hương vị tinh tế hòa quyện trong từng món ăn</span>
+                  </div>
+                </div>
+                <div class="highlight-item">
+                  <div class="hl-icon">🍷</div>
+                  <div class="hl-info">
+                    <strong data-i18n="hlWineTitle">Rượu vang & Trò chuyện ấm cúng</strong>
+                    <span data-i18n="hlWineSub">Nâng ly chúc mừng ngày đặc biệt của người phụ nữ anh thương</span>
+                  </div>
+                </div>
+                <div class="highlight-item">
+                  <div class="hl-icon">🌿</div>
+                  <div class="hl-info">
+                    <strong data-i18n="hlAmbienceTitle">Không gian sân vườn Thảo Điền</strong>
+                    <span data-i18n="hlAmbienceSub">Yên bình, lãng mạn và tách biệt khỏi ồn ào phố thị</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-meta">
+                <span class="meta-item" data-i18n="nightMetaTime">⏰ Thời gian hẹn: Đúng 19:30 có mặt tại bàn</span>
+                <span class="meta-item" data-i18n="nightMetaDress">🌹 Trang phục: Chiếc váy xinh em tự tin nhất</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Dress Code & Sweet Notes -->
+    <section class="notes-section" data-reveal>
+      <div class="container">
+        <div class="notes-card">
+          <div class="notes-header">
+            <span class="notes-icon">💌</span>
+            <h3 data-i18n="notesTitle">Một Chút Lưu Ý Nhỏ</h3>
+          </div>
+          
+          <div class="notes-grid">
+            <div class="note-box">
+              <div class="note-box-title" data-i18n="dressCodeTitle">Gợi ý trang phục</div>
+              <p data-i18n="dressCodeDesc">Màu trắng kem, be, hồng pastel hoặc chiếc váy em yêu thích và tự tin nhất.</p>
+              <div class="palette-dots">
+                <span class="color-dot" style="background: #ffffff;" title="Trắng tinh khôi"></span>
+                <span class="color-dot" style="background: #f7ebe8;" title="Hồng phấn"></span>
+                <span class="color-dot" style="background: #e8d7c3;" title="Be ấm"></span>
+                <span class="color-dot" style="background: #2b2d42;" title="Xanh đêm huyền ảo"></span>
+              </div>
+            </div>
+
+            <div class="note-box">
+              <div class="note-box-title" data-i18n="mustBringTitle">Điều cần mang theo</div>
+              <p data-i18n="mustBringDesc">Chỉ cần một tâm hồn thật thoải mái và nụ cười rạng rỡ của em. Mọi việc còn lại cứ để anh lo!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive RSVP & Notification Response -->
+    <section class="rsvp-section" id="rsvp-section" data-reveal>
+      <div class="container rsvp-container">
+        <div class="rsvp-box">
+          <div class="rsvp-heart-badge">♥</div>
+          <h2 class="rsvp-title" data-i18n="rsvpTitle">Em Sẽ Đi Cùng Anh Chứ?</h2>
+          <p class="rsvp-subtitle" data-i18n="rsvpSubtitle">Hãy xác nhận để anh được đồng hành cùng công chúa trong ngày 20/10 nhé!</p>
+
+          <!-- Sweet Note for Him (Optional Input) -->
+          <div class="rsvp-note-wrapper">
+            <textarea id="rsvp-note-input" class="rsvp-note-input" rows="2" placeholder="Gửi kèm một lời nhắn nhỏ cho anh (tùy chọn)..." data-i18n-placeholder="rsvpNotePlaceholder"></textarea>
+          </div>
+
+          <div class="rsvp-actions">
+            <button id="accept-btn" class="btn btn-primary">
+              <span class="btn-text" data-i18n="acceptBtnText">Dạ, Em Đồng Ý! 💕</span>
+              <span class="btn-glow"></span>
+            </button>
+            <button id="calendar-btn" class="btn btn-secondary">
+              <span class="btn-text" data-i18n="calendarBtnText">📅 Thêm vào Lịch</span>
+            </button>
+          </div>
+
+          <!-- Notification Sending / Success Status Indicator -->
+          <div id="rsvp-status" class="rsvp-status hidden">
+            <div class="status-box">
+              <div class="status-heart">✨ 💖 ✨</div>
+              <h3 data-i18n="statusHeading">Anh Đã Ghi Nhận Lời Đồng Ý!</h3>
+              <p data-i18n="statusDesc">Hẹn gặp cô gái xinh đẹp nhất của anh vào ngày 20/10 nhé. Nhận quà chiều 12h-16h, vượt kẹt xe 17h và bữa tối 19:30 tại Pizza 4P's!</p>
+              <div id="notify-feedback" class="notify-feedback">
+                <span class="notify-icon">💌</span> <span id="notify-feedback-text">Đang gửi thông báo đến anh...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer-container">
+        <p class="footer-sign" data-i18n="footerSign">Made with all my love • Happy Vietnamese Women's Day 20/10</p>
+        <button id="reopen-envelope-btn" class="reopen-btn" data-i18n="reopenBtn">💌 Đóng & xem lại phong bì thư</button>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Sweet Toast Notification Container -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
