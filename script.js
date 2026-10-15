@@ -55,7 +55,7 @@ const I18N = {
     envelopeHint: "Chạm vào con dấu sáp để mở thư gửi em",
     tagline: "An Exclusive Invitation",
     mainTitle: "Dành Riêng Cho Em",
-    subDate: "Chủ Nhật • 20 Tháng 10",
+    subDate: "Thứ Ba • 20 Tháng 10",
     badgePill: "20 • 10 • Vietnamese Women's Day",
     heroHeadline: "Hẹn Hò Cùng Anh",
     heroSubline: '"Mỗi khoảnh khắc đẹp đẽ nhất hôm nay, anh đều muốn dành tặng riêng em."',
@@ -149,7 +149,7 @@ const I18N = {
     envelopeHint: "Tap the wax seal to open your letter",
     tagline: "An Exclusive Invitation",
     mainTitle: "Especially For You",
-    subDate: "Sunday • October 20th",
+    subDate: "Tuesday • October 20th",
     badgePill: "October 20th • Special Romance Date",
     heroHeadline: "A Date With Me",
     heroSubline: '"Every beautiful moment today is crafted just for you."',
@@ -249,6 +249,14 @@ function applyLanguage(lang) {
 
   const dict = I18N[lang];
   if (!dict) return;
+
+  // Tự động tính đúng thứ trong tuần theo ngày hẹn được cấu hình
+  const dateObj = new Date(DATE_CONFIG.targetYear, DATE_CONFIG.targetMonth - 1, DATE_CONFIG.targetDay);
+  const weekdaysVi = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+  const weekdaysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  dict.subDate = lang === 'vi'
+    ? `${weekdaysVi[dateObj.getDay()]} • ${DATE_CONFIG.targetDay} Tháng ${DATE_CONFIG.targetMonth}`
+    : `${weekdaysEn[dateObj.getDay()]} • October ${DATE_CONFIG.targetDay}th`;
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
