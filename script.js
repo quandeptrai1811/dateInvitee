@@ -240,7 +240,7 @@ const I18N = {
   }
 };
 
-let currentLang = localStorage.getItem('date_lang') || 'vi';
+let currentLang = localStorage.getItem('date_lang') || 'en';
 
 function applyLanguage(lang) {
   currentLang = lang;
@@ -289,7 +289,7 @@ function applyLanguage(lang) {
 // 3. THEME TOGGLE (LIGHT / DARK)
 // =============================================================================
 function initTheme() {
-  const savedTheme = localStorage.getItem('date_theme') || 'light';
+  const savedTheme = localStorage.getItem('date_theme') || 'dark';
   applyTheme(savedTheme);
 
   const themeToggle = document.getElementById('theme-toggle');
